@@ -1,6 +1,8 @@
 package devdojo.springboot.maggessi.project.controllers;
 
 import devdojo.springboot.maggessi.project.domain.Anime;
+import devdojo.springboot.maggessi.project.requests.AnimePostRequestBody;
+import devdojo.springboot.maggessi.project.requests.AnimePutRequestBody;
 import devdojo.springboot.maggessi.project.services.AnimeService;
 import devdojo.springboot.maggessi.project.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,11 +34,11 @@ public class AnimeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime){
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody){
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Anime> save(@PathVariable long id){
@@ -44,8 +46,8 @@ public class AnimeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PutMapping
-    public ResponseEntity<Anime> replace(@RequestBody Anime anime){
-        animeService.replace(anime);
+    public ResponseEntity<Anime> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
