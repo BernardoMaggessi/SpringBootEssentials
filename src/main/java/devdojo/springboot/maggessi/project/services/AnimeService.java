@@ -2,6 +2,7 @@ package devdojo.springboot.maggessi.project.services;
 
 import devdojo.springboot.maggessi.project.Mapper.AnimeMapper;
 import devdojo.springboot.maggessi.project.domain.Anime;
+import devdojo.springboot.maggessi.project.exception.BadRequestException;
 import devdojo.springboot.maggessi.project.requests.AnimePostRequestBody;
 import devdojo.springboot.maggessi.project.requests.AnimePutRequestBody;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class AnimeService {
 
     public Anime findByIdOrThrowBadRequestException(long id) {
         return animeRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not Found"));
+                .orElseThrow(() -> new BadRequestException("Anime not found"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {
