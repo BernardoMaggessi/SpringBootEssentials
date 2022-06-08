@@ -12,6 +12,6 @@ public class ExceptionDetails {
     private int status;
     private String details;
     private String developerMessage;
-    private LocalDateTime timeStamp;
+    private LocalDateTime timestamp;
 
 }
