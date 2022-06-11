@@ -18,33 +18,39 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AnimeService {
-    private final AnimeRespository animeRespository;
+
+    private final AnimeRespository animeRepository;
 
     public Page<Anime> listAll(Pageable pageable) {
-        return animeRespository.findAll(pageable);
+        return animeRepository.findAll(pageable);
+    }
+
+    public List<Anime> listAllNonPageable(){
+        return animeRepository.findAll();
     }
 
     public List<Anime> findByName(String name) {
-        return animeRespository.findByName(name);
+        return animeRepository.findByName(name);
     }
 
     public Anime findByIdOrThrowBadRequestException(long id) {
-        return animeRespository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Anime not found"));
+        return animeRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Anime not Found"));
     }
-    @Transactional(rollbackOn = Exception.class)
-    public Anime save(AnimePostRequestBody animePostRequestBody){
-        return animeRespository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
+
+    @Transactional
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(long id) {
-        animeRespository.delete(findByIdOrThrowBadRequestException(id));
+        animeRepository.delete(findByIdOrThrowBadRequestException(id));
     }
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
         anime.setId(savedAnime.getId());
-        animeRespository.save(anime);
+        animeRepository.save(anime);
     }
 }
