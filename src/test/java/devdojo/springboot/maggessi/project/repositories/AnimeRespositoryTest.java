@@ -14,6 +14,8 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
+import static devdojo.springboot.maggessi.project.utils.AnimeCreator.createAnimeToBeSaved;
+
 @DataJpaTest
 @DisplayName("Tests for Anime Repository")
 @Log4j2
@@ -25,7 +27,7 @@ class AnimeRespositoryTest {
     @Test
     @DisplayName("Save persists anime when sucessful")
     void save_PersistAnime_WhenSuccesful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
         Anime animeSaved = this.animeRespository.save(animeToBeSaved);
 
         Assertions.assertThat(animeSaved).isNotNull();
@@ -37,7 +39,7 @@ class AnimeRespositoryTest {
     @Test
     @DisplayName("Save updates anime when sucessful")
     void save_UpdatesAnime_WhenSuccesful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
         Anime animeSaved = this.animeRespository.save(animeToBeSaved);
 
         animeSaved.setName("Overlord");
@@ -52,7 +54,7 @@ class AnimeRespositoryTest {
     @Test
     @DisplayName("Delete anime when sucessful")
     void delete_RemoveAnime_WhenSuccesful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRespository.save(animeToBeSaved);
 
@@ -66,7 +68,7 @@ class AnimeRespositoryTest {
     @Test
     @DisplayName("Find by name returns list when sucessful ")
     void findByName_returnListOfAnime_WhenSucessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRespository.save(animeToBeSaved);
 
@@ -96,9 +98,6 @@ class AnimeRespositoryTest {
         Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
                 .isThrownBy(() -> this.animeRespository.save(anime))
                 .withMessageContaining("The anime name cannot be empty");
-    }
-    private Anime createAnime(){
-        return Anime.builder().name("Hajime no Ippo").build();
     }
 
 
