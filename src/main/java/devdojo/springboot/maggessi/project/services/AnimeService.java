@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import devdojo.springboot.maggessi.project.repositories.AnimeRespository;
+import devdojo.springboot.maggessi.project.repositories.AnimeRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnimeService {
 
-    private final AnimeRespository animeRepository;
+    private final AnimeRepository animeRepository;
 
     public Page<Anime> listAll(Pageable pageable) {
         return animeRepository.findAll(pageable);
