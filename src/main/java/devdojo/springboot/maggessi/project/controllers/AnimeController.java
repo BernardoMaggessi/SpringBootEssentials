@@ -19,15 +19,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-
 @RestController
 @RequestMapping("animes")
 @Log4j2
 @RequiredArgsConstructor
 public class AnimeController {
-    private final DateUtil dateUtil;
     private final AnimeService animeService;
-
 
     @GetMapping
     public ResponseEntity<Page<Anime>> list(Pageable pageable) {
@@ -44,8 +41,8 @@ public class AnimeController {
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
-    @GetMapping(path = "/find/{name}")
-    public ResponseEntity<List<Anime>> findByName(@RequestParam(required = false) String name) {
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam String name) {
         return ResponseEntity.ok(animeService.findByName(name));
     }
 
